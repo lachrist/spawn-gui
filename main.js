@@ -66,12 +66,6 @@ module.exports = function (container, playground) {
     div5.appendChild(div4);
     div5.appendChild(div2);
 
-    // div5 = document.createElement("div");
-    // div5.style.display = "flex";
-    // div5.style.flexGrow = "1";
-    // div5.style.flexDirection = "column";
-    // div5.appendChild(div2);
-
     container.style.width = "initial";
     container.style.display = "flex";
     container.style.flexDirection = "row";
