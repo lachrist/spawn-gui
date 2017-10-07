@@ -1,0 +1,24 @@
+{
+  "name": "spawn-widget",
+  "description": "Widget for spawning node-like processes",
+  "version": "0.0.0",
+  "author": {
+    "name": "Laurent Christophe",
+    "email": "lachrist@vub.ac.be"
+  },
+  "repository": "lachrist/spawn-widget",
+  "license": "MIT",
+  "dependencies": {
+    "commonjs-editor": "0.0.7",
+    "stdio-widget": "0.0.4",
+    "toggle-widget": "0.0.3"
+  },
+  "main": "./main.js",
+  "keywords": [
+    "Browser",
+    "Widget",
+    "Spawn",
+    "Node",
+    "Process"
+  ]
+}
