@@ -1,7 +1,7 @@
 var Stream = require("stream");
 var Events = require("events");
 var SpawnWidget = require("../main.js");
-var Playground = require("./playground.js");
+var ChildSandbox = require("./child-sandbox.js");
 var div = document.createElement("div");
 document.body.appendChild(div);
 function kill (signal) { this.emit("exit", null, signal) }
@@ -16,10 +16,10 @@ function pair (writer, reader, name) {
     }
   });
 }
-SpawnWidget(div, Playground)(function (script, argv) {
+SpawnWidget(div, ChildSandbox)(function (path, script, argv) {
   var child = new Events();
   var process = {
-    argv: ["node", "inline"].concat(argv),
+    argv: ["node", path].concat(argv),
     kill: kill
   };
   pair(child, process, "stdin");

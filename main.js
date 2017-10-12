@@ -1,48 +1,46 @@
 
-var StdioWidget = require("stdio-widget");
-var ToggleWidget = require("toggle-widget");
-var CommonjsEditor = require("commonjs-editor");
+const StdioWidget = require("stdio-widget");
+const ToggleWidget = require("toggle-widget");
+const SandboxEditor = require("sandbox-editor");
 
-module.exports = function (container, playground) {
-  var child = null;
-  var spawn = null;
-  var input = document.createElement("input");
-  var div1 = document.createElement("div");
-  var div2 = document.createElement("div");
-  var div3 = document.createElement("div");
-  var toggle = ToggleWidget(div1, {
-    colors: ["green", "red"]
-  });
-  var stdio = StdioWidget(div2);
-  var editor = CommonjsEditor(div3, playground);
+module.exports = (container, sandbox) => {
+  let child = null;
+  let spawn = null;
+  const input = document.createElement("input");
+  const div1 = document.createElement("div");
+  const div2 = document.createElement("div");
+  const div3 = document.createElement("div");
+  const toggle = ToggleWidget(div1, {colors:["green", "red"]});
+  const stdio = StdioWidget(div2);
+  const editor = SandboxEditor(div3, sandbox);
 
-  function update () {
+  const update = () => {
     child = null;
     editor.setReadOnly(false);
     toggle();
-  }
+  };
 
-  function ontoggle () {
+  const ontoggle = () => {
     if (child) {
       child.removeListener("exit", update);
       child.kill();
       child = null;
     } else {
-      child = spawn(editor.getBundle(), input.value ? input.value.split(" ") : []);
+      child = spawn(editor.getPath(), editor.getScript(), input.value ? input.value.split(/\s+/g) : []);
       child.addListener("exit", update);
       stdio(child.stdin, child.stdout, child.stderr);
     }
     editor.setReadOnly(Boolean(child));
-  }
+  };
 
-  div2.addEventListener("ctrl", function (event) { event.key === "c" && child && child.kill() });
+  div2.addEventListener("ctrl", (event) => { event.key === "c" && child && child.kill() });
 
   div1.addEventListener("toggle", ontoggle);
   div1.disabled = true;
   input.placeholder = "argv...";
   container.className += " spawn-widget";
 
-  (function layout () {
+  ((() => {
     div1.style.marginRight = "10px";
     div2.style.minWidth = "300px";
     div2.style.resize = "both";
@@ -51,7 +49,7 @@ module.exports = function (container, playground) {
     input.style.flexGrow = "1";
     input.style.fontFamily = "monospace";
 
-    var div4 = document.createElement("div");
+    const div4 = document.createElement("div");
     div4.style.flexShrink = 0;
     div4.style.display = "flex";
     div4.style.flexDirection = "row";
@@ -59,7 +57,7 @@ module.exports = function (container, playground) {
     div4.appendChild(div1);
     div4.appendChild(input);
 
-    var div5 = document.createElement("div");
+    const div5 = document.createElement("div");
     div5.style.marginRight = "10px";
     div5.style.display = "flex";
     div5.style.flexDirection = "column";
@@ -71,9 +69,9 @@ module.exports = function (container, playground) {
     container.style.flexDirection = "row";
     container.appendChild(div5);
     container.appendChild(div3);
-  } ());
+  }) ());
 
-  return function (sp) {
+  return (sp) => {
     child && child.kill();
     div1.disabled = !sp;
     spawn = sp;
