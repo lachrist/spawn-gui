@@ -1,6 +1,6 @@
 {
   "name": "spawn-widget",
-  "description": "Widget for spawning node-like processes",
+  "description": "Widget for spawning node-like processes in the browser",
   "version": "0.0.2",
   "author": {
     "name": "Laurent Christophe",

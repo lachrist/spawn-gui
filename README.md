@@ -1,12 +1,12 @@
 # spawn-widget
 
-Widget to spawn node-like processes in the browser.
-Usage [here](/demo), live demo [here](https://cdn.rawgit.com/lachrist/spawn-widget/d23fd67c/demo/index.html).
+Widget for spawning node-like processes in the browser.
+Usage [here](/demo), live demo [here](https://cdn.rawgit.com/lachrist/spawn-widget/58580c02/demo/index.html).
 
-### `setspawn = require("spawn-widget")(container, playground)`
+### `setspawn = require("spawn-widget")(container, sandbox)`
 
 * `container :: dom.Element`
-* `playground :: commonjs-editor.Playground`
+* `sandbox :: commonjs-editor.Sandbox`
 * `setspawn(spawn)`
   * `child = spawn(path, script, argv)`
     * `path :: string`
