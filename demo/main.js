@@ -1,26 +1,27 @@
-var Stream = require("stream");
-var Events = require("events");
-var SpawnWidget = require("../main.js");
-var ChildSandbox = require("./child-sandbox.js");
-var div = document.createElement("div");
+const Stream = require("stream");
+const Events = require("events");
+const SpawnWidget = require("../main.js");
+const ChildSandbox = require("./child-sandbox.js");
+const div = document.createElement("div");
 document.body.appendChild(div);
 function kill (signal) { this.emit("exit", null, signal) }
-function noop () {}
-function pair (writer, reader, name) {
-  reader[name] = new Stream.Readable({read:noop});
+const pair = (writer, reader, name) => {
+  reader[name] = new Stream.Readable({read:()=>{}});
   writer[name] = new Stream.Writable({
     decodeStrings: false,
-    write: function (chunk, encoding, callback) {
+    write: (chunk, encoding, callback) => {
       reader[name].push(chunk, encoding);
       callback();
     }
   });
 }
-SpawnWidget(div, ChildSandbox)(function (path, script, argv) {
-  var child = new Events();
-  var process = {
+SpawnWidget(div, ChildSandbox)((path, script, argv) => {
+  const child = new Events();
+  child.kill = kill;
+  child.on("exit", () => { child.stdin.end() });
+  const process = {
     argv: ["node", path].concat(argv),
-    kill: kill
+    exit: (code) => { child.emit("exit", code, null) }
   };
   pair(child, process, "stdin");
   pair(process, child, "stdout");

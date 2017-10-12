@@ -8,7 +8,8 @@ Usage [here](/demo), live demo [here](https://cdn.rawgit.com/lachrist/spawn-widg
 * `container :: dom.Element`
 * `playground :: commonjs-editor.Playground`
 * `setspawn(spawn)`
-  * `spawn(path, script, argv)`
+  * `child = spawn(path, script, argv)`
     * `path :: string`
     * `script :: string`
     * `argv :: [string]`
+    * `child :: child_process.ChildProcess`

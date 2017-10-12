@@ -1,3 +1,4 @@
+process.stdout.write(process.argv.join(" ")+"\n");
 require("./error.js");
 process.stdin.setEncoding("utf8");
 process.stdin.on("data", function (data) {
