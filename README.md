@@ -1,5 +1,7 @@
 # spawn-widget
 
+**DEPRECATE moved to https://github.com/lachrist/sandbox-spawner**
+
 Widget for spawning node-like processes in the browser.
 Usage [here](/demo), live demo [here](https://cdn.rawgit.com/lachrist/spawn-widget/58580c02/demo/index.html).
 
